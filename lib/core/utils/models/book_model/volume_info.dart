@@ -43,7 +43,7 @@ class VolumeInfo extends Equatable {
     this.allowAnonLogging,
     this.contentVersion,
     this.panelizationSummary,
-    required this.imageLinks,
+    this.imageLinks,
     this.language,
     this.previewLink,
     this.infoLink,
@@ -73,7 +73,9 @@ class VolumeInfo extends Equatable {
         : PanelizationSummary.fromMap(
             json['panelizationSummary'] as Map<String, dynamic>,
           ),
-    imageLinks: json['imageLinks']==null?null: ImageLinks.fromMap(json['imageLinks'] as Map<String, dynamic>),
+    imageLinks: json['imageLinks'] == null
+        ? null
+        : ImageLinks.fromMap(json['imageLinks'] as Map<String, dynamic>),
     language: json['language'] as String?,
     previewLink: json['previewLink'] as String?,
     infoLink: json['infoLink'] as String?,

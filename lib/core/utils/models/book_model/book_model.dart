@@ -28,29 +28,38 @@ class BookModel extends Equatable {
     this.searchInfo,
   });
 
-  factory BookModel.fromMap(Map<String, dynamic> data) => BookModel(
-    kind: data['kind'] as String?,
-    id: data['id'] as String?,
-    etag: data['etag'] as String?,
-    selfLink: data['selfLink'] as String?,
-    volumeInfo: VolumeInfo.fromMap(data['volumeInfo'] as Map<String, dynamic>),
-    saleInfo: data['saleInfo'] == null
-        ? null
-        : SaleInfo.fromMap(data['saleInfo'] as Map<String, dynamic>),
-    accessInfo: data['accessInfo'] == null
-        ? null
-        : AccessInfo.fromMap(data['accessInfo'] as Map<String, dynamic>),
-    searchInfo: data['searchInfo'] == null
-        ? null
-        : SearchInfo.fromMap(data['searchInfo'] as Map<String, dynamic>),
-  );
+  factory BookModel.fromMap(Map<String, dynamic> data) {
+    // التحقق من وجود volumeInfo قبل إنشاء BookModel
+    if (data['volumeInfo'] == null) {
+      throw Exception('volumeInfo is required but was null');
+    }
+
+    return BookModel(
+      kind: data['kind'] as String?,
+      id: data['id'] as String?,
+      etag: data['etag'] as String?,
+      selfLink: data['selfLink'] as String?,
+      volumeInfo: VolumeInfo.fromMap(
+        data['volumeInfo'] as Map<String, dynamic>,
+      ),
+      saleInfo: data['saleInfo'] == null
+          ? null
+          : SaleInfo.fromMap(data['saleInfo'] as Map<String, dynamic>),
+      accessInfo: data['accessInfo'] == null
+          ? null
+          : AccessInfo.fromMap(data['accessInfo'] as Map<String, dynamic>),
+      searchInfo: data['searchInfo'] == null
+          ? null
+          : SearchInfo.fromMap(data['searchInfo'] as Map<String, dynamic>),
+    );
+  }
 
   Map<String, dynamic> toMap() => {
     'kind': kind,
     'id': id,
     'etag': etag,
     'selfLink': selfLink,
-    'volumeInfo': volumeInfo?.toMap(),
+    'volumeInfo': volumeInfo.toMap(),
     'saleInfo': saleInfo?.toMap(),
     'accessInfo': accessInfo?.toMap(),
     'searchInfo': searchInfo?.toMap(),

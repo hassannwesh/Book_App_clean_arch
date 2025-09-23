@@ -14,7 +14,6 @@ class FeatureBookListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FeaturedBooksCubit, FeaturedBooksCubitState>(
       builder: (context, state) {
-        
         if (state is FeaturedBooksCubitSeccess) {
           return SizedBox(
             height: MediaQuery.of(context).size.height * .3,

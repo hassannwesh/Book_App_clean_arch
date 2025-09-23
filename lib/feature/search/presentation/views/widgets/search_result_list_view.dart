@@ -13,6 +13,26 @@ class SearchResultListView extends StatelessWidget {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         if (state is SearchSuccess) {
+          if (state.books.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.search_off, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    "No books found",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Try searching with different keywords",
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
+            );
+          }
           return ListView.builder(
             padding: EdgeInsets.zero,
             itemCount: state.books.length,
@@ -24,11 +44,46 @@ class SearchResultListView extends StatelessWidget {
             },
           );
         } else if (state is SearchFailure) {
-          return Center(child: Text(state.errMessage));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                Text(
+                  "Error occurred",
+                  style: TextStyle(fontSize: 18, color: Colors.red[300]),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  state.errMessage,
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
         } else if (state is SearchLoading) {
           return const CustomLoadingindicator();
         } else {
-          return const Center(child: Text(" Search For Books"));
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.search, size: 64, color: Colors.grey),
+                SizedBox(height: 16),
+                Text(
+                  "Search For Books",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  "Enter a book title or author name",
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
+          );
         }
       },
     );

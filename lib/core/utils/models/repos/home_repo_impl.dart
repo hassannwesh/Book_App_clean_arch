@@ -78,7 +78,6 @@ class HomeRepoImpl extends HomeRepo {
       }
       return left(ServerFailure(e.toString()));
     }
-    ;
   }
 
   @override
@@ -88,7 +87,7 @@ class HomeRepoImpl extends HomeRepo {
     try {
       var data = await apiService.get(
         endPoint:
-            'volumes?filter=free-ebooks&orderBy=relevance&q=${Uri.encodeComponent(query)}',
+            '/volumes?filter=free-ebooks&orderBy=relevance&q=${Uri.encodeComponent(query)}',
       );
 
       if (data['items'] == null) {
@@ -98,9 +97,15 @@ class HomeRepoImpl extends HomeRepo {
       List<BookModel> books = [];
       for (var item in data['items']) {
         try {
-          books.add(BookModel.fromMap(item));
+          // التحقق من وجود البيانات المطلوبة قبل إنشاء BookModel
+          if (item is Map<String, dynamic> && item['volumeInfo'] != null) {
+            books.add(BookModel.fromMap(item));
+          } else {
+            print('Skipping item with missing volumeInfo: $item');
+          }
         } catch (e) {
           print('Error parsing book item: $e');
+          print('Item data: $item');
         }
       }
 
