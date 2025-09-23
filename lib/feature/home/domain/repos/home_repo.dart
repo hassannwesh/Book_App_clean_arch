@@ -5,5 +5,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class HomeRepo {
   Future<Either<Failures, List<BookEntity>>> feachFeaturedBooks();
-  Future<Either<Failures, BookEntity>> feachNewestBooks();
+  Future<Either<Failures, List<BookEntity>>> feachNewestBooks();
 }
