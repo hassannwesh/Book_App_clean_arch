@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:bookly_app/core/utils/widgets/custom_loading_indicator.dart';
 import 'package:bookly_app/feature/home/presentation/manger/featued_books/newest_books_cubit/newest_books_cubit.dart';
 import 'package:bookly_app/feature/home/presentation/views/widgets/newset_books_list_view_item.dart';
